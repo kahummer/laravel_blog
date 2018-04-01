@@ -30,6 +30,7 @@
 </div>
 
 <div class="form-group"> 
+      <span>You can Attach More Than One Image</span>
       {!! Form::label('photo_id', 'Upload Photo')!!}
       {!! Form::file('photo_id', null, ['class'=>'form-control'])!!}
 </div>

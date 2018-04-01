@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use App\Role;
+        
 class User extends Authenticatable
 {
     use Notifiable;
@@ -40,4 +41,18 @@ class User extends Authenticatable
 
         return $this->belongsTo('App\Photo');
     }
+
+    public function isAdmin() {
+
+
+            if ($this->role->name == "admin" && $this->is_active == 1) {
+                    
+                    return true;
+
+            }
+
+            return false;
+
+    }
+
 }

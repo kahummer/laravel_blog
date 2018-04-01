@@ -8,6 +8,7 @@ use App\Http\Requests\UserEditRequest;
 use App\User;
 use App\Role;
 use App\Photo;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -35,7 +36,6 @@ class AdminUsersController extends Controller
         //
         $roles = Role::pluck('name','id')->all();
         
-
         return view('admin.users.create', compact('roles'));
     }
 
@@ -79,7 +79,7 @@ class AdminUsersController extends Controller
 
             
        
-
+return redirect('admin/users');
 
     }
 
@@ -157,5 +157,23 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+       $user = User::findOrFail($id);
+
+       if($user->photo->file){
+           // unlink('C:\xampp\htdocs'. $user->photo->file);
+           $user->delete();
+
+           Session::flash('deleted user', 'The user has been deleted');
+
+           return redirect('admin/users');
+       }
+
+      
+
+       $user->delete();
+
+        Session::flash('deleted user', 'The user has been deleted');
+
+       return redirect('admin/users');
     }
 }
